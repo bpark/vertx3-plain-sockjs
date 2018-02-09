@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>Demo</title>
+        <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+        <script type="application/javascript">
+            var sock = new SockJS('streams');
+
+            sock.onopen = function() {
+                console.log('open');
+                sock.send('test');
+            };
+
+            sock.onmessage = function(e) {
+                console.log('message', e.data);
+                writeToScreen('<span style = "color: blue;">RESPONSE: ' + e.data+'</span>');
+                window.scrollTo(0,document.body.scrollHeight);
+            };
+
+            sock.onclose = function() {
+                console.log('close');
+            };
+
+            function writeToScreen(message) {
+                var pre = document.createElement("p");
+                pre.style.wordWrap = "break-word";
+                pre.innerHTML = message; output.appendChild(pre);
+            }
+
+        </script>
+    </head>
+    <body>
+        <h2>SockJS Demo</h2>
+        <div id = "output"></div>
+    </body>
+</html>
